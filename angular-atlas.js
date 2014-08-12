@@ -15,12 +15,12 @@ angular.module('boundstate.atlas', [])
   this.$get = ['$window', '$http', '$document', function ($window, $http, $document) {
 
     var submitForm = function (url, params) {
-      var f = $document[0].createElement('form');
-      f.style.display = 'none';
-      $document.append(f);
-      f.method = 'POST';
+      var form = $document[0].createElement('form');
+      form.style.display = 'none';
+      $document[0].body.appendChild(form);
+      form.setAttribute('method', 'POST');
       if (url !== '') {
-        f.action = url;
+        form.setAttribute('action', url);
       }
       var inputs = [];
       angular.forEach(params, function(value, name) {
@@ -28,12 +28,12 @@ angular.module('boundstate.atlas', [])
         input.setAttribute("type", "hidden");
         input.setAttribute("name", name);
         input.setAttribute("value", value);
-        f.appendChild(input);
+        form.appendChild(input);
         inputs.push(input);
       });
-      f.submit();
+      form.submit();
       angular.forEach(inputs, function(input) {
-        f.removeChild(input);
+        form.removeChild(input);
       });
     };
 
