@@ -32,9 +32,7 @@ angular.module('boundstate.atlas', [])
         inputs.push(input);
       });
       form.submit();
-      angular.forEach(inputs, function(input) {
-        form.removeChild(input);
-      });
+      $document[0].body.removeChild(form);
     };
 
     return {

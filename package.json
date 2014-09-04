@@ -1,6 +1,6 @@
 {
   "name": "angular-atlas",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Bound State Software",
   "scripts": {
     "postinstall": "./node_modules/.bin/bower install",
