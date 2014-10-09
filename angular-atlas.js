@@ -60,7 +60,7 @@ angular.module('boundstate.atlas', [])
       generatePdf: function (options) {
         submitForm(_baseUrl + '/html-converter/pdf', options);
       },
-      logException: function (exception, cause, details) {
+      logException: function (exception, cause, data) {
         var errorMessage = exception.toString();
         var stackTrace = printStackTrace ? printStackTrace({e: exception}) : null;
         postData(_baseUrl + '/exceptions', {
@@ -69,7 +69,7 @@ angular.module('boundstate.atlas', [])
           message: errorMessage,
           stack_trace: stackTrace,
           cause: cause,
-          details: details
+          data: data
         });
       }
     };
