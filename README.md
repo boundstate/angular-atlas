@@ -6,8 +6,8 @@ An AngularJS wrapper for the Atlas feedback, metric, and PDF services.
 
 Include `angular-atlas.js` (and `stacktrace.js` if you want to log errors with stack traces) in your HTML:
 
-    <script src="stacktrace.js">
-    <script src="angular-atlas.js">
+    <script src="stacktrace.js"></script>
+    <script src="angular-atlas.js"></script>
 
 Then load the module in your application by adding it as a dependent module:
 
