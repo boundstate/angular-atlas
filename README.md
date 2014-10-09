@@ -4,21 +4,30 @@ An AngularJS wrapper for the Atlas feedback, metric, and PDF services.
 
 ## Installation
 
-Include `angular-atlas.js` in your HTML:
+Include `angular-atlas.js` (and `stacktrace.js` if you want to log errors with stack traces) in your HTML:
 
+    <script src="stacktrace.js">
     <script src="angular-atlas.js">
-    
+
 Then load the module in your application by adding it as a dependent module:
 
     angular.module('app', ['boundstate.atlas']);
     
 ## Usage
 
-Configure your app id (and the Atlas service base URL if necessary):
+Configure your app id (and the Atlas service base URL if necessary) and log exceptions:
 
-    .config(function (atlasProvider) {
+    .config(function ($provide, atlasProvider) {
       atlasProvider.setBaseUrl('https://atlas.boundstatesoftware.com');
       atlasProvider.setAppId('my-app');
+      
+      // Log exceptions to Atlas (optional)
+      $provide.decorator('$exceptionHandler', ['$delegate', 'atlas', function($delegate, atlas) {
+        return function(exception, cause) {
+          $delegate(exception, cause);
+          atlas.logException(exception, cause);
+        };
+      }]);
     })
     
 Embed the feedback form:

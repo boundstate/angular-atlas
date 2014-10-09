@@ -1,5 +1,9 @@
 angular.module('boundstate.atlas', [])
 
+.factory('printStackTrace', ['$window', function ($window) {
+  return $window.printStackTrace;
+}])
+
 .provider('atlas', function AtlasProvider () {
   var _baseUrl = 'https://atlas.boundstatesoftware.com';
   var _appId;
@@ -12,7 +16,7 @@ angular.module('boundstate.atlas', [])
     _appId = appId;
   };
 
-  this.$get = ['$window', '$http', '$document', function ($window, $http, $document) {
+  this.$get = ['$window', '$document', '$injector', 'printStackTrace', function ($window, $document, $injector, printStackTrace) {
 
     var submitForm = function (url, params) {
       var form = $document[0].createElement('form');
@@ -35,6 +39,11 @@ angular.module('boundstate.atlas', [])
       $document[0].body.removeChild(form);
     };
 
+    var postData = function (url, data) {
+      var $http = $injector.get('$http');
+      $http.post(url, data);
+    };
+
     return {
       embedFeedbackForm: function () {
         var f = $window.document.createElement('script');
@@ -46,10 +55,21 @@ angular.module('boundstate.atlas', [])
       },
       recordMetric: function (data) {
         data.app_id = _appId;
-        $http.post(_baseUrl + '/metrics', data);
+        postData(_baseUrl + '/metrics', data);
       },
       generatePdf: function (options) {
         submitForm(_baseUrl + '/html-converter/pdf', options);
+      },
+      logException: function (exception, cause) {
+        var errorMessage = exception.toString();
+        var stackTrace = printStackTrace ? printStackTrace({e: exception}) : null;
+        postData(_baseUrl + '/exceptions', {
+          app_id: _appId,
+          url: $window.location.href,
+          message: errorMessage,
+          stack_trace: stackTrace,
+          cause: cause
+        });
       }
     };
   }];
