@@ -62,7 +62,6 @@ angular.module('boundstate.atlas', [])
       },
       logException: function (exception) {
         var stackTrace = printStackTrace ? printStackTrace({e: exception}) : null;
-        debugger;
         postData(_baseUrl + '/exceptions', {
           app_id: _appId,
           language: 'js',
