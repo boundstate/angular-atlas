@@ -2,6 +2,8 @@
 
 An AngularJS wrapper for the Atlas feedback, metric, and PDF services.
 
+[![Build Status](https://travis-ci.org/boundstate/angular-atlas.svg)](https://travis-ci.org/boundstate/angular-atlas)
+
 ## Installation
 
 Include `angular-atlas.js` (and `stacktrace.js` if you want to log errors with stack traces) in your HTML:
